@@ -1,0 +1,70 @@
+BRIJESH PALTA
++91 9033030450 | brijeshpalta99@gmail.com | linkedin.com/in/brijesh-palta | github.com/brijesh-palta
+
+SUMMARY
+Master of Cyber Security candidate with hands-on experience in Python development, machine learning, REST API engineering, cloud platforms, and production application security. Built a machine learning recommendation system using scikit-learn, feature engineering, regression modelling, Flask, and React, and developed production REST APIs in Python Flask for mobile and web applications. AWS experience includes S3, IAM, EC2, Lambda, VPC, GuardDuty, KMS, and CloudWatch, complemented by practical experience building and securing production systems. Strong foundation in software engineering, applied machine learning, cybersecurity, and cloud infrastructure.
+
+TECHNICAL SKILLS
+AI & Machine Learning: Large Language Models (LLMs), DistilBERT, scikit-learn, regression modelling, feature engineering, data preprocessing, model evaluation, Pandas, NumPy
+NLP & Information Retrieval: Natural Language Processing, text classification, BM25, evidence retrieval, LIME, SHAP, confidence estimation, explainable AI
+Programming & Backend: Python, SQL, JavaScript, Java, Flask, Django, Node.js, Express.js, REST APIs
+Cloud & Infrastructure: AWS, S3, EC2, Lambda, IAM, VPC, Security Groups, GuardDuty, KMS, CloudWatch, Docker, Linux
+Application Development: React.js, Android (Kotlin/Java), iOS (SwiftUI), Firebase Authentication
+Security Engineering: Wazuh SIEM, Suricata IDS, Zeek, ELK Stack, OWASP Top 10, Burp Suite, Nmap, Wireshark, MITRE ATT&CK
+Development Tools: Git, GitHub Actions, VMware, Active Directory, Tableau
+Networking: TCP/IP, subnetting, VLANs, VPNs, firewalls, Cisco routing & switching, LAN/WAN deployment
+
+EXPERIENCE
+Junior Team Lead | Gopher Industries | Industry Capstone - Deakin University | Australia (Remote)
+Nov 2025 - Jan 2026
+- Led a team of 4 engineers through sprint planning, task allocation, technical coordination, and delivery tracking on an industry-partnered project.
+- Resolved technical blockers through hands-on debugging and structured code reviews, maintaining consistent code quality across team deliverables.
+
+Cyber Security Intern | CJ Darcl Logistics Ltd. | Gurgaon, Haryana, India
+Jan 2025 - Apr 2025
+- Designed and implemented RESTful API endpoints using Python Flask for data exchange between Android, iOS, and React.js applications, implementing authentication and input validation at the API layer.
+- Worked with development teams to identify and remediate application vulnerabilities across 3 internal production applications, strengthening application reliability and security.
+- Performed application security testing across authentication flows, session management, and input validation using OWASP Top 10 methodology, documenting findings with reproduction steps, severity, and remediation guidance.
+- Built a cross-platform Digital Visiting Card application using Android Kotlin/Java, iOS SwiftUI, QR-based identity exchange, and Firebase Authentication.
+
+Network Engineer Intern | Impulse Integrated Systems Pvt. Ltd. | Pune, Maharashtra, India
+Aug 2024 - Nov 2024
+- Configured and maintained Cisco routers and switches in a live production network, supporting operational reliability across connected endpoints.
+- Investigated routing, latency, and connectivity incidents through structured troubleshooting and packet-level analysis.
+- Delivered LAN and WAN rollouts across multi-site environments, including switch configuration, VLAN segmentation, and site-to-site VPN setup.
+
+PROJECTS
+Explainable Multi-Domain Fact-Checking System with LLM Verification | Research Project - Deakin University
+Developing an explainable fact-checking system combining DistilBERT-based domain classification, BM25 evidence retrieval, confidence estimation, and LIME/SHAP explainability. Currently integrating an LLM verification layer for low-confidence claims to independently assess retrieved evidence and provide a second-opinion verdict with supporting sources.
+
+Brijaix - Machine Learning Recommendation System | Feb 2025 - Apr 2025
+Built a Python-based recommendation engine using scikit-learn, implementing data preprocessing, feature engineering, and regression modelling. Exposed the model through a Flask REST API and integrated it with a React.js frontend to deliver a complete machine learning application.
+
+Binary Mind - Secure Cloud File Sharing Platform | Jul 2024 - Dec 2024
+Designed and deployed a cloud-based file-sharing platform using AWS S3 and a Node.js backend. Implemented IAM-based access control, AES-256 encryption at rest, authenticated file operations, OAuth 2.0, and activity logging for secure cloud application management.
+
+Insider Threat Detection Lab - Corporate Network Simulation | Jul 2025 - Oct 2025
+Architected a VMware-based enterprise environment integrating Active Directory, Wazuh SIEM, Suricata IDS, Zeek, and ELK. Simulated privilege misuse, lateral movement, and data exfiltration scenarios, developed detection rules for 5+ attack vectors, and mapped security findings to MITRE ATT&CK.
+
+EDUCATION
+Master of Cyber Security (Professional) | Deakin University | Jul 2025 - Jan 2027
+WAM: 80.08% | GIFT City, India
+
+B.Tech - Information & Communication Technology | Marwadi University | Aug 2022 - May 2025
+CGPA: 7.38/10 | Rajkot, India
+
+Diploma - Information & Communication Technology | Marwadi University | Jul 2019 - May 2022
+CGPA: 8.02/10 | Rajkot, India
+
+CERTIFICATIONS & RECOGNITION
+- AWS Certified AI Practitioner - Amazon Web Services
+- Neural Networks and Deep Learning - DeepLearning.AI, Coursera
+- Machine Learning: Regression - Coursera
+- AWS Academy - Cloud Foundations; Cloud Developing
+- Cisco - Introduction to Cybersecurity; Cybersecurity Essentials
+- Certificate of Appreciation - Cyber Security Internship, CJ Darcl Logistics Ltd.
+
+LEADERSHIP & ACTIVITIES
+Student Placement Coordinator | Deakin University | Nov 2025 - Mar 2026
+- Supported employer outreach by researching hiring companies, roles, and selection criteria.
+- Guided students on cloud security, DevSecOps, and software engineering learning paths.
