@@ -1,6 +1,6 @@
 "use client"
 
-import { Download, ExternalLink } from "lucide-react"
+import { Download, ExternalLink, MessageCircle } from "lucide-react"
 import { useEffect, useState } from "react"
 
 const fullName = "Brijesh Palta"
@@ -66,12 +66,21 @@ export function ResumePageContent() {
             </div>
 
             <a
-              href="/Brijesh_Palta_Resume.txt"
+              href="/brijesh-palta-portfolio/Brijesh_Palta_Resume.txt"
               download="Brijesh_Palta_Resume.txt"
               className="inline-flex items-center gap-2 rounded-lg border border-primary bg-primary/10 px-6 py-3 font-mono text-sm text-primary hover:bg-primary/20 transition-colors"
             >
               <Download className="h-4 w-4" />
               Download Resume
+            </a>
+            <a
+              href="https://wa.me/919033030450"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg border border-border bg-secondary/30 px-6 py-3 font-mono text-sm text-foreground transition-colors hover:border-primary hover:text-primary"
+            >
+              <MessageCircle className="h-4 w-4" />
+              Discuss a Project
             </a>
           </div>
         </div>
