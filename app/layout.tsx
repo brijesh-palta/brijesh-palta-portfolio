@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
+import { SecurityProvider } from "@/components/security-provider"
 import "./globals.css"
 
 // Configure fonts with proper options
@@ -82,9 +83,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${geist.variable} ${geistMono.variable} ${spaceGrotesk.variable}`}>
       <body className="font-sans antialiased">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={true} storageKey="theme-mode">
-          {children}
-        </ThemeProvider>
+        <SecurityProvider>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={true} storageKey="theme-mode">
+            {children}
+          </ThemeProvider>
+        </SecurityProvider>
       </body>
     </html>
   )
