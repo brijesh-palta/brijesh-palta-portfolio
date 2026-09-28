@@ -15,6 +15,7 @@ const navItems = [
   { label: "Projects", href: "/projects" },
   { label: "Workbench", href: "/workbench" },
   { label: "Blog", href: "/blog" },
+  { label: "Security", href: "/security" },
 ]
 
 const socialLinks = [
@@ -72,7 +73,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden items-center gap-1 md:flex">
+          <div className="hidden items-center gap-1 xl:flex">
             {navItems.map((item, index) => (
               <Link
                 key={item.label}
@@ -152,7 +153,7 @@ export function Header() {
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-card/50 transition-colors hover:bg-secondary md:hidden"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-card/50 transition-colors hover:bg-secondary xl:hidden"
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-navigation"
@@ -185,7 +186,7 @@ export function Header() {
         <div
           id="mobile-navigation"
           className={cn(
-            "overflow-hidden bg-background transition-all duration-400 md:hidden",
+            "overflow-hidden bg-background transition-all duration-400 xl:hidden",
             isMobileMenuOpen ? "max-h-[32rem] opacity-100 pt-4" : "max-h-0 opacity-0",
           )}
           aria-hidden={!isMobileMenuOpen}

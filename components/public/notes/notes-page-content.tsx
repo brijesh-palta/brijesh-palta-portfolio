@@ -12,7 +12,7 @@ const notes = [
     excerpt:
       "Learnings from compiling the kernel, configuring BusyBox, and creating bootable ISOs with Syslinux. A deep dive into the foundations of operating systems.",
     content:
-      "Full walkthrough of building a minimal Linux distribution including kernel compilation, initramfs setup, and bootloader configuration...",
+      "A minimal Linux distribution is a useful way to understand the path from power-on to a working shell. Start by choosing a kernel configuration and building it for the target architecture. Create a root filesystem with BusyBox, add the device nodes and startup scripts needed by the init process, and package it as an initramfs. Configure Syslinux to load the kernel and filesystem, then test the image in a virtual machine before trying physical hardware. Keep each build step reproducible: record tool versions, configuration choices, and the commands used so a broken image can be traced back to its source.",
     date: "Nov 2025",
     category: "systems",
     tags: ["Linux", "Shell", "Docker"],
@@ -24,7 +24,8 @@ const notes = [
     title: "MCP protocol in LLM apps",
     excerpt:
       "Implementing Model Context Protocol for seamless AI model interactions with vector databases in RAG apps. Exploring the future of AI agent communication.",
-    content: "Deep dive into MCP protocol implementation...",
+    content:
+      "The Model Context Protocol gives an application a consistent way to connect a model to external tools and data. An MCP client discovers available capabilities from a server, presents the relevant tool descriptions to the model, and handles requested calls through a controlled boundary. For a RAG application, keep retrieval behind a narrowly scoped tool: validate inputs, enforce access controls before returning documents, and avoid sending more context than the task requires. Treat tool output as untrusted data, log calls without recording secrets, and make failures explicit so the application can recover safely.",
     date: "Apr 2025",
     category: "ai",
     tags: ["AI", "MCP", "RAG", "LangChain"],
@@ -36,7 +37,8 @@ const notes = [
     title: "Next.js 16 + Tailwind v4",
     excerpt:
       "Exploring the new features in Next.js 16 and migrating to Tailwind CSS v4's new configuration system. Performance improvements and developer experience.",
-    content: "Migration guide and new features overview...",
+    content:
+      "A framework and CSS-tooling migration is easier to reason about when it is split into small, verifiable steps. First confirm the supported runtime and dependency versions, then migrate the styling configuration and global entry points while keeping a screenshot or build baseline. Replace deprecated patterns one component at a time, checking responsive layouts and generated CSS as you go. For a Next.js application, also verify server/client component boundaries, route metadata, and production builds; development mode alone can hide integration issues. Keep the migration focused on behavior rather than rewriting unrelated components at the same time.",
     date: "Dec 2024",
     category: "frontend",
     tags: ["Next.js", "Tailwind", "TypeScript"],
@@ -48,7 +50,8 @@ const notes = [
     title: "Self-hosting LLMs with FastAPI",
     excerpt:
       "Running Llama2 locally and building a personal chatbot API for natural language tasks. Complete setup guide with Docker containerization.",
-    content: "Step-by-step guide to self-hosting LLMs...",
+    content:
+      "A self-hosted model service needs the same operational care as any other API. Run the model behind a small service boundary, expose only the routes the client needs, and apply authentication, request limits, and input-size limits before inference. Keep model files and credentials outside the container image, and use resource limits so a large request cannot starve the host. Add health checks and structured logs that report latency and failure categories without storing prompt data by default. Test the deployment with representative workloads and document the hardware assumptions, startup time, and memory use.",
     date: "Oct 2023",
     category: "ai",
     tags: ["Python", "FastAPI", "Llama2", "Docker"],
@@ -60,7 +63,8 @@ const notes = [
     title: "Docker multi-stage builds for Next.js",
     excerpt:
       "Optimizing container sizes and build times with multi-stage Docker builds. Production-ready configurations for Next.js applications.",
-    content: "Docker optimization techniques...",
+    content:
+      "A multi-stage container build keeps compilers and development dependencies out of the runtime image. Use a dependency stage with the lockfile to make installs repeatable, a builder stage to produce the application output, and a minimal runtime stage that copies only the files required to start. Run as a non-root user, provide configuration at runtime, and avoid placing secrets in build arguments or image layers. Compare image size and startup behavior before and after the change, then scan the final image and rebuild it regularly so base-image security fixes are incorporated.",
     date: "Sep 2023",
     category: "devops",
     tags: ["Docker", "Next.js", "CI/CD"],
@@ -72,7 +76,8 @@ const notes = [
     title: "React Server Components deep dive",
     excerpt:
       "Understanding the paradigm shift with RSC. How server components change data fetching patterns and improve performance.",
-    content: "Complete guide to React Server Components...",
+    content:
+      "React Server Components let parts of a React tree render on the server without shipping their implementation to the browser. They work well for data-heavy, mostly read-only UI, while interactive controls still belong in client components. Keep the client boundary as small as practical: pass serializable data across it, and avoid pulling server-only modules into browser bundles. When debugging, trace which component owns data fetching and which owns interaction state. Measure the rendered result and network requests so the architectural change improves real loading behavior rather than adding complexity for its own sake.",
     date: "Aug 2023",
     category: "frontend",
     tags: ["React", "RSC", "Next.js"],
@@ -190,12 +195,11 @@ export function NotesPageContent() {
                 <article
                   key={note.id}
                   className={cn(
-                    "group relative cursor-pointer overflow-hidden rounded-xl border border-border bg-card/40 glass p-6 sm:p-7 transition-all duration-400 hover:border-primary/40 hover:bg-card/60 active:scale-[0.99] hover-lift opacity-0",
+                    "group relative overflow-hidden rounded-xl border border-border bg-card/40 glass p-6 sm:p-7 transition-all duration-400 hover:border-primary/40 hover:bg-card/60 hover-lift opacity-0",
                     isVisible && "animate-fade-in-up",
                     expandedNote === note.id && "border-primary/50 bg-card/70",
                   )}
                   style={{ animationDelay: `${index * 80 + 200}ms` }}
-                  onClick={() => setExpandedNote(expandedNote === note.id ? null : note.id)}
                 >
                   <div
                     className={cn(
@@ -235,10 +239,21 @@ export function NotesPageContent() {
                       ))}
                     </div>
 
-                    <div className="flex items-center gap-2 font-mono text-xs text-primary transition-all duration-300 sm:opacity-0 sm:translate-x-[-8px] group-hover:opacity-100 group-hover:translate-x-0">
-                      <span>read more</span>
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
+                    <button
+                      type="button"
+                      aria-expanded={expandedNote === note.id}
+                      aria-controls={`note-content-${note.id}`}
+                      onClick={() => setExpandedNote(expandedNote === note.id ? null : note.id)}
+                      className="inline-flex items-center gap-2 font-mono text-xs text-primary transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    >
+                      <span>{expandedNote === note.id ? "show less" : "read more"}</span>
+                      <ArrowRight className={cn("h-3.5 w-3.5 transition-transform", expandedNote === note.id && "rotate-90")} />
+                    </button>
+                    {expandedNote === note.id && (
+                      <div id={`note-content-${note.id}`} className="mt-4 border-t border-border/60 pt-4">
+                        <p className="text-sm leading-relaxed text-muted-foreground">{note.content}</p>
+                      </div>
+                    )}
                   </div>
 
                   <div className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-primary to-transparent transition-all duration-500 group-hover:w-full" />

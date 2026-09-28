@@ -4,9 +4,6 @@ const nextConfig = {
   basePath: process.env.NODE_ENV === "production" ? "/brijesh-palta-portfolio" : "",
   productionBrowserSourceMaps: false,
 
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     unoptimized: true,
   },

@@ -34,7 +34,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Brijesh Palta", url: "https://github.com/brijesh-palta" }],
   creator: "Brijesh Palta",
   publisher: "Brijesh Palta",
-  generator: "v0.app",
   referrer: "strict-origin-when-cross-origin",
   openGraph: {
     type: "website",

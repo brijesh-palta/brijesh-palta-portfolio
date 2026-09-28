@@ -1,83 +1,31 @@
-# EinCode
+# Brijesh Palta | Portfolio
 
-A modern, minimal code editor / playground built with Next.js, React and Radix UI.
+Personal portfolio for Brijesh Palta, focused on cloud security, DevSecOps, projects, technical writing, and learning notes.
 
-Version: `0.1.1`
+## Stack
 
-## What the project does
+- Next.js App Router with static export
+- React and TypeScript
+- Tailwind CSS and Radix UI
+- pnpm for dependency management
 
-Code Forge is a lightweight, opinionated editor UI and playground intended for experimenting with editor-like components and small developer tools. It demonstrates a modern stack including Next.js 16, React 19, TypeScript, Tailwind CSS and Radix UI primitives.
+## Local development
 
-### Why this is useful
+Requirements: Node.js 20 or newer and pnpm 10.
 
-- Fast developer playground to prototype editor UX and integrations.
-- Collection of reusable UI components (see `components/`).
-- Up-to-date with Next.js 16 and React 19 modern patterns (app router, server components).
-
-#### Key features
-
-- App shell and layout in `app/`
-- Reusable UI primitives under `components/` (cursor glow, header, footer, workbench, etc.)
-- Styling with Tailwind CSS and global styles in `styles/` and `app/globals.css`
-- TypeScript-first codebase
-
-##### Getting started
-
-Prerequisites
-
-- Node.js 18 or newer
-- pnpm (recommended) — install from <https://pnpm.io/>
-
-Quick start
-
-\`\`\`bash
-# install dependencies
-pnpm install
-
-# run development server
+```bash
+pnpm install --frozen-lockfile
 pnpm dev
-\`\`\`
+```
 
-Available scripts
+Useful checks:
 
-- `pnpm dev` — runs `next dev` (development server)
-- `pnpm build` — runs `next build` (production build)
-- `pnpm start` — runs `next start` (serve built app)
-- `pnpm lint` — run `eslint .`
-
-Building for production
-
-\`\`\`bash
+```bash
+pnpm exec tsc --noEmit
+pnpm audit
 pnpm build
-pnpm start
-\`\`\`
+```
 
-Project layout (high level)
+The production build exports static files. Deploy the contents of `out/` to a static host. The `public/_headers` file follows the Cloudflare Pages/Netlify header-file format; GitHub Pages ignores it, so configure equivalent response headers at an edge proxy/CDN if you use one. Review the Content Security Policy against the services enabled for your deployment.
 
-- `app/` — Next.js App Router pages and layout
-- `components/` — UI components and small feature pieces
-- `lib/` — utilities and helpers
-- `public/` — static assets
-- `styles/` — global styles and Tailwind CSS entry
-
-Where to get help
-
-- Create an issue: <https://github.com/ehsanghaffar/code-forge/issues>
-- For quick questions, open a discussion or file a concise issue with reproduction steps.
-
-Who maintains this project
-
-- Maintainer: Ehsan Ghaffar — listed as the package author.
-
-Contributing
-
-Contributions are welcome. Open an issue to discuss larger changes, or send a pull request with a focused, well-documented change. Keep changes small and include a description and screenshots (if UI-related).
-
-Notes and next steps
-
-- Consider adding a `CONTRIBUTING.md` and CI badges for build/lint status.
-- If you want, I can add a basic `CONTRIBUTING.md` and a PR template next.
-
----
-
-If anything in this README should be adjusted (more examples, extra badges, or internal docs links), tell me which parts you want expanded and I'll update it.
+The Security page is a local educational checklist and command-style guide. It does not scan websites, execute shell commands, or send user input to a server.

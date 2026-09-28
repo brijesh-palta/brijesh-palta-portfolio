@@ -10,6 +10,8 @@ const notes = [
     title: "IoT Security Workshop",
     excerpt:
       "Simulated smart home appliance security testing using a demo web interface. Hands-on experience with IoT vulnerability assessment and threat modeling.",
+    content:
+      "A practical IoT assessment starts with understanding what a device exposes: network services, web interfaces, wireless protocols, and update mechanisms. In a controlled lab, inventory devices and their open services, then inspect traffic for plaintext data or weak authentication. Test the interface for common access-control and input-validation issues, and document each finding with its impact and reproduction steps. The goal is to turn those observations into defenses: change default credentials, isolate devices on dedicated network segments, encrypt communications, and establish a reliable firmware update process. Only test devices and networks you own or have explicit permission to assess.",
     date: "24 Jan 2026",
     timestamp: new Date("2026-01-24").getTime(),
     category: "security",
@@ -20,6 +22,8 @@ const notes = [
     title: "Cloud Security Workshop",
     excerpt:
       "Cloud security fundamentals and best practices. AWS security architecture, IAM policies, and defense-in-depth strategies.",
+    content:
+      "A secure cloud foundation begins with identity and clear boundaries. Require multi-factor authentication, prefer short-lived role credentials, and grant each workload only the actions it needs. Place application and data services in private subnets, expose only deliberate entry points, and encrypt data both at rest and in transit. Enable audit logging before deploying workloads, then route important events into alerts that someone will review. A useful workshop exercise is to trace one request from the public edge to its data store and identify the identity, network rule, and log entry that governs each step. Revisit these controls as the architecture changes.",
     date: "07 Feb 2026",
     timestamp: new Date("2026-02-07").getTime(),
     category: "cloud",
@@ -30,6 +34,8 @@ const notes = [
     title: "Application Security Testing",
     excerpt:
       "Deep dive into authentication flows, input validation, access control vulnerabilities, and secure code review practices.",
+    content:
+      "Application security testing is most effective when it follows a user journey. Map sign-in, password recovery, role changes, and sensitive actions, then verify that every transition checks identity and authorization on the server. Try malformed and unexpected inputs in a safe test environment, and confirm that validation happens at the system boundary rather than only in the browser. During code review, look for trust assumptions around user-controlled values, secrets, and error handling. Record a concise reproduction, impact, and remediation for each finding, then add a regression test so the fix stays fixed.",
     date: "Jan 2025",
     timestamp: new Date("2025-01-15").getTime(),
     category: "security",
@@ -40,6 +46,8 @@ const notes = [
     title: "Network Defense & Monitoring",
     excerpt:
       "Enterprise network security, routing optimization, LAN/WAN deployments, and real-time threat monitoring with SIEM and IDS.",
+    content:
+      "Good network defense combines sensible segmentation with visibility. Keep systems with different risk profiles in separate zones, restrict traffic to the paths services actually need, and document the expected flows. Centralize DNS, firewall, and endpoint events so investigations can connect activity across systems. Detection rules should have a clear purpose, an owner, and a response path; tune noisy alerts instead of letting them become background noise. Regularly review routing and access rules against the current architecture, and practice tracing a sample alert from its first event through triage and containment.",
     date: "Nov 2024",
     timestamp: new Date("2024-11-15").getTime(),
     category: "network",
@@ -95,11 +103,10 @@ export function LabNotes() {
             <article
               key={note.id}
               className={cn(
-                "group relative cursor-pointer overflow-hidden rounded-xl border border-border bg-card/40 glass p-6 sm:p-7 transition-all duration-400 hover:border-primary/40 hover:bg-card/60 active:scale-[0.99] hover-lift animate-fade-in-up",
+                "group relative overflow-hidden rounded-xl border border-border bg-card/40 glass p-6 sm:p-7 transition-all duration-400 hover:border-primary/40 hover:bg-card/60 hover-lift animate-fade-in-up",
                 expandedNote === note.id && "border-primary/50 bg-card/70",
               )}
               style={{ animationDelay: `${index * 100 + 200}ms` }}
-              onClick={() => setExpandedNote(expandedNote === note.id ? null : note.id)}
             >
               <div
                 className={cn(
@@ -122,10 +129,21 @@ export function LabNotes() {
 
                 <p className="text-sm leading-relaxed text-muted-foreground">{note.excerpt}</p>
 
-                <div className="mt-5 flex items-center gap-2 font-mono text-xs text-primary transition-all duration-300 sm:opacity-0 sm:translate-x-[-8px] group-hover:opacity-100 group-hover:translate-x-0">
-                  <span>read more</span>
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                </div>
+                <button
+                  type="button"
+                  aria-expanded={expandedNote === note.id}
+                  aria-controls={`lab-note-content-${note.id}`}
+                  onClick={() => setExpandedNote(expandedNote === note.id ? null : note.id)}
+                  className="mt-5 inline-flex items-center gap-2 font-mono text-xs text-primary transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
+                  <span>{expandedNote === note.id ? "show less" : "read more"}</span>
+                  <ArrowRight className={cn("h-3.5 w-3.5 transition-transform", expandedNote === note.id && "rotate-90")} />
+                </button>
+                {expandedNote === note.id && (
+                  <div id={`lab-note-content-${note.id}`} className="mt-4 border-t border-border/60 pt-4">
+                    <p className="text-sm leading-relaxed text-muted-foreground">{note.content}</p>
+                  </div>
+                )}
               </div>
 
               <div className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-primary to-transparent transition-all duration-500 group-hover:w-full" />

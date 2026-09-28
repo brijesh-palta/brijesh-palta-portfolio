@@ -189,6 +189,7 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
                     window.open(
                       `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`,
                       "_blank",
+                      "noopener,noreferrer",
                     )
                   }
                 >
@@ -203,6 +204,7 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
                     window.open(
                       `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`,
                       "_blank",
+                      "noopener,noreferrer",
                     )
                   }
                 >
@@ -250,6 +252,7 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
                 window.open(
                   `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`,
                   "_blank",
+                  "noopener,noreferrer",
                 )
               }
             >
@@ -263,6 +266,7 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
                 window.open(
                   `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`,
                   "_blank",
+                  "noopener,noreferrer",
                 )
               }
             >
@@ -354,6 +358,11 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
 function parseMarkdown(content: string): string {
   return (
     content
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\"/g, "&quot;")
+      .replace(/'/g, "&#39;")
       // Headers
       .replace(/^### (.*$)/gm, "<h3>$1</h3>")
       .replace(/^## (.*$)/gm, "<h2>$1</h2>")
