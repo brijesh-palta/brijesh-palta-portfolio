@@ -820,3 +820,21 @@ export const popularSecurityTopics = [
 export const securityKnowledgeLookup = Object.fromEntries(
   securityKnowledgeEntries.map((entry) => [entry.id, entry]),
 )
+
+export const securitySearchIndex = securityKnowledgeEntries.map((entry) => ({
+  id: entry.id,
+  question: entry.question,
+  category: entry.category,
+  difficulty: entry.difficulty,
+  keywords: entry.keywords,
+  searchableText: [
+    entry.question,
+    entry.category,
+    entry.difficulty,
+    ...entry.keywords,
+    ...entry.relatedQuestions,
+    entry.answer.whatIsIt,
+    entry.answer.whyItMatters,
+    entry.answer.example,
+  ].join(" "),
+}))

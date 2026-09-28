@@ -13,55 +13,181 @@ const difficultyFilters = ["All", "Beginner", "Intermediate", "Advanced"] as con
 
 type DifficultyFilter = (typeof difficultyFilters)[number]
 
-const normalizeText = (value: string) =>
-  value
+const stopWords = new Set([
+  "a",
+  "about",
+  "an",
+  "and",
+  "are",
+  "as",
+  "at",
+  "be",
+  "by",
+  "do",
+  "for",
+  "from",
+  "how",
+  "i",
+  "in",
+  "is",
+  "it",
+  "of",
+  "on",
+  "or",
+  "that",
+  "the",
+  "their",
+  "this",
+  "to",
+  "what",
+  "when",
+  "where",
+  "why",
+  "with",
+])
+
+const tokenAliases: Record<string, string> = {
+  app: "app",
+  application: "app",
+  applications: "app",
+  api: "api",
+  apis: "api",
+  "application programming interface": "api",
+  aws: "aws",
+  "amazon web services": "aws",
+  secure: "secure",
+  security: "secure",
+  securement: "secure",
+  protect: "secure",
+  protection: "secure",
+  protected: "secure",
+  protects: "secure",
+  safeguard: "secure",
+  safeguards: "secure",
+  hardened: "secure",
+  harden: "secure",
+  hardening: "secure",
+  lockdown: "secure",
+  "zero trust": "zero trust",
+  "zero-trust": "zero trust",
+  ios: "ios",
+  iphone: "ios",
+  ipad: "ios",
+  android: "android",
+  mobile: "mobile",
+  kubernetes: "kubernetes",
+  k8s: "kubernetes",
+  docker: "docker",
+  jwt: "jwt",
+  oauth: "oauth",
+  xss: "xss",
+  sql: "sql",
+  injection: "injection",
+  ransomware: "ransomware",
+  ai: "ai",
+  llm: "llm",
+  incident: "incident",
+  incidentresponse: "incident",
+}
+
+const normalizeText = (value: string) => {
+  const normalized = value
     .toLowerCase()
+    .replace(/&/g, " and ")
     .replace(/[^a-z0-9\s]/g, " ")
     .replace(/\s+/g, " ")
     .trim()
 
-function findBestMatch(query: string) {
-  const input = normalizeText(query)
-  if (!input) return securityKnowledgeEntries[0]
+  if (!normalized) return ""
 
-  const exactMatch = securityKnowledgeEntries.find((entry) => {
-    if (normalizeText(entry.question) === input) return true
-    return entry.keywords.some((keyword) => normalizeText(keyword) === input)
-  })
-  if (exactMatch) return exactMatch
+  const normalizedPhrase = normalized
+    .replace(/\bapplication programming interface\b/g, "api")
+    .replace(/\bamazon web services\b/g, "aws")
+    .replace(/\bzero trust\b/g, "zero trust")
 
-  const tokens = input.split(" ").filter(Boolean)
-  const scored = securityKnowledgeEntries
-    .map((entry) => {
-      const haystack = [
-        entry.question,
-        entry.category,
-        ...entry.keywords,
-        ...entry.relatedQuestions,
-        entry.answer.whatIsIt,
-        entry.answer.whyItMatters,
-      ].join(" ")
-      const normalizedHaystack = normalizeText(haystack)
+  const tokens = normalizedPhrase
+    .split(" ")
+    .map((token) => {
+      if (!token || stopWords.has(token)) return ""
 
-      let score = 0
-      for (const token of tokens) {
-        if (normalizedHaystack.includes(token)) score += 2
-        if (normalizeText(entry.question).includes(token)) score += 4
-        if (entry.keywords.some((keyword) => normalizeText(keyword).includes(token))) score += 3
-      }
-
-      const synonymBoost =
-        (input.includes("secure") || input.includes("security")) && entry.category.toLowerCase().includes("security")
-          ? 4
-          : 0
-      const categoryBoost = input.includes(entry.category.toLowerCase().replace(/\s+/g, "")) ? 5 : 0
-
-      return { entry, score: score + synonymBoost + categoryBoost }
+      const alias = tokenAliases[token] ?? token
+      return alias
     })
+    .filter(Boolean)
+
+  return Array.from(new Set(tokens)).join(" ")
+}
+
+function scoreEntryForQuery(entry: (typeof securityKnowledgeEntries)[number], query: string) {
+  const normalizedQuery = normalizeText(query)
+  if (!normalizedQuery) return 0
+
+  const searchableText = normalizeText(
+    [
+      entry.question,
+      entry.category,
+      ...entry.keywords,
+      ...entry.relatedQuestions,
+      entry.answer.whatIsIt,
+      entry.answer.whyItMatters,
+      entry.answer.example,
+      entry.answer.howToDetectIt,
+      entry.answer.howToPreventIt,
+      ...entry.answer.bestPractices,
+    ].join(" "),
+  )
+
+  const queryTerms = normalizedQuery.split(" ").filter(Boolean)
+  const questionTerms = normalizeText(entry.question).split(" ").filter(Boolean)
+  const keywordTerms = entry.keywords.flatMap((keyword) => normalizeText(keyword).split(" ")).filter(Boolean)
+
+  if (normalizedQuery === normalizeText(entry.question)) return 200
+  if (entry.keywords.some((keyword) => normalizeText(keyword) === normalizedQuery)) return 180
+
+  let score = 0
+
+  for (const term of queryTerms) {
+    if (searchableText.includes(term)) score += 6
+    if (questionTerms.includes(term)) score += 14
+    if (keywordTerms.includes(term)) score += 10
+
+    if (term === "secure" && (entry.category.toLowerCase().includes("security") || entry.question.toLowerCase().includes("secure"))) {
+      score += 18
+    }
+
+    if (["ios", "android", "mobile"].includes(term) && entry.category.toLowerCase().includes("mobile")) {
+      score += 14
+    }
+
+    if (["aws", "kubernetes", "docker", "cloud", "linux", "windows"].includes(term) && entry.category.toLowerCase().includes("cloud")) {
+      score += 12
+    }
+
+    if (["api", "jwt", "oauth", "tls", "encryption"].includes(term) && entry.category.toLowerCase().includes("api")) {
+      score += 12
+    }
+  }
+
+  const phraseMatchBonus = normalizedQuery.includes("ios") && entry.category.toLowerCase().includes("mobile") ? 18 : 0
+  const secureModeBonus = normalizedQuery.includes("secure") && entry.question.toLowerCase().includes("secure") ? 12 : 0
+  const protectBonus = normalizedQuery.includes("protect") && entry.question.toLowerCase().includes("secure") ? 12 : 0
+
+  return score + phraseMatchBonus + secureModeBonus + protectBonus
+}
+
+function entryMatchesQuery(entry: (typeof securityKnowledgeEntries)[number], query: string) {
+  return scoreEntryForQuery(entry, query) > 0
+}
+
+function findBestMatch(query: string) {
+  const cleanedQuery = normalizeText(query)
+  if (!cleanedQuery) return securityKnowledgeEntries[0]
+
+  const scored = securityKnowledgeEntries
+    .map((entry) => ({ entry, score: scoreEntryForQuery(entry, cleanedQuery) }))
     .sort((a, b) => b.score - a.score)
 
-  const best = scored[0]
-  if (best && best.score > 0) return best.entry
+  if (scored[0] && scored[0].score > 0) return scored[0].entry
 
   return securityKnowledgeEntries[0]
 }
@@ -70,17 +196,8 @@ function getSuggestedQuestions(prompt: string): string[] {
   const cleaned = normalizeText(prompt)
   if (!cleaned) return popularSecurityTopics.slice(0, 6)
 
-  const allQuestions = securityKnowledgeEntries.map((entry) => entry.question)
-  const scored = allQuestions
-    .map((question) => {
-      const normalizedQuestion = normalizeText(question)
-      let score = 0
-      for (const term of cleaned.split(" ")) {
-        if (!term) continue
-        if (normalizedQuestion.includes(term)) score += 2
-      }
-      return { question, score }
-    })
+  const scored = securityKnowledgeEntries
+    .map((entry) => ({ question: entry.question, score: scoreEntryForQuery(entry, cleaned) }))
     .filter((item) => item.score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, 6)
@@ -108,20 +225,7 @@ export function SecurityPanel() {
     return securityKnowledgeEntries.filter((entry) => {
       const matchesCategory = activeCategory === "All" || entry.category === activeCategory
       const matchesDifficulty = activeDifficulty === "All" || entry.difficulty === activeDifficulty
-      const matchesQuery =
-        !normalizedQuery ||
-        [
-          entry.question,
-          entry.category,
-          ...entry.keywords,
-          ...entry.relatedQuestions,
-          entry.answer.whatIsIt,
-          entry.answer.whyItMatters,
-          entry.answer.example,
-        ]
-          .join(" ")
-          .toLowerCase()
-          .includes(normalizedQuery)
+      const matchesQuery = !normalizedQuery || entryMatchesQuery(entry, normalizedQuery)
 
       return matchesCategory && matchesDifficulty && matchesQuery
     })
