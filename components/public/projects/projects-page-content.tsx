@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from "react"
 import { cn } from "@/lib/utils"
-import { Star, GitFork, Sparkles } from "lucide-react"
+import { ArrowUpRight, Star, GitFork, Sparkles } from "lucide-react"
+import Link from "next/link"
 
 const projects = [
   {
@@ -102,9 +103,24 @@ const projects = [
     forks: 2,
     featured: false,
   },
+  {
+    id: 8,
+    title: "Explainable Multi-Domain Fact-Checking",
+    description:
+      "Master's thesis research evaluating claim routing, evidence retrieval, confidence, explanations, and adversarial robustness across seven domains.",
+    tags: ["Thesis Research", "Fact-Checking", "BM25", "LIME / SHAP", "LLM Verification"],
+    category: "Research",
+    year: "2026",
+    stars: 0,
+    forks: 0,
+    showStats: false,
+    featured: true,
+    highlight: true,
+    href: "/projects/fact-checking-system",
+  },
 ]
 
-const categories = ["all", "Cloud Security", "Threat Detection", "DevSecOps", "Network Security", "Application Development", "Machine Learning"]
+const categories = ["all", "Research", "Cloud Security", "Threat Detection", "DevSecOps", "Network Security", "Application Development", "Machine Learning"]
 
 export function ProjectsPageContent() {
   const [activeFilter, setActiveFilter] = useState("all")
@@ -124,9 +140,9 @@ export function ProjectsPageContent() {
         {/* Hero */}
         <div className={cn("mb-12 sm:mb-16 space-y-4 opacity-0", isVisible && "animate-fade-in-up")}>
           <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary">Artifacts</p>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Security Projects</h1>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Projects & Research</h1>
           <p className="max-w-2xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-            A collection of cloud security, DevSecOps, and threat detection projects. Built with security-first principles and production-ready standards.
+            Thesis research and project work across fact-checking, cloud security, DevSecOps, and threat detection.
           </p>
         </div>
 
@@ -213,7 +229,7 @@ export function ProjectsPageContent() {
                 {project.description}
               </p>
 
-              <div className="mb-5 flex items-center gap-5 font-mono text-xs text-muted-foreground">
+              {project.showStats !== false && <div className="mb-5 flex items-center gap-5 font-mono text-xs text-muted-foreground">
                 <span className="flex items-center gap-1.5 transition-colors group-hover:text-yellow-500">
                   <Star className="h-3.5 w-3.5" />
                   {project.stars}
@@ -222,7 +238,7 @@ export function ProjectsPageContent() {
                   <GitFork className="h-3.5 w-3.5" />
                   {project.forks}
                 </span>
-              </div>
+              </div>}
 
               <div className="mb-5 flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
@@ -234,6 +250,16 @@ export function ProjectsPageContent() {
                   </span>
                 ))}
               </div>
+
+              {"href" in project && project.href && (
+                <Link
+                  href={project.href}
+                  className="inline-flex min-h-10 items-center gap-2 font-mono text-xs text-primary transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
+                  View thesis research
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </Link>
+              )}
 
               <div className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-primary via-primary/80 to-transparent transition-all duration-500 group-hover:w-full" />
             </article>

@@ -5,7 +5,7 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://brijesh.janaktravel
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Projects covering cloud security, DevSecOps, and threat detection.",
+  description: "Thesis research and projects in cloud security, DevSecOps, and threat detection.",
   keywords: ["cloud security", "devsecops", "threat detection", "security projects"],
   openGraph: {
     title: "Projects | Brijesh Palta",
