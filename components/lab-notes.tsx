@@ -33,7 +33,7 @@ const notes = [
     id: 3,
     title: "Application Security Testing",
     excerpt:
-      "Deep dive into authentication flows, input validation, access control vulnerabilities, and secure code review practices.",
+      "Notes on authentication, input validation, access control, and secure code review.",
     content:
       "Application security testing is most effective when it follows a user journey. Map sign-in, password recovery, role changes, and sensitive actions, then verify that every transition checks identity and authorization on the server. Try malformed and unexpected inputs in a safe test environment, and confirm that validation happens at the system boundary rather than only in the browser. During code review, look for trust assumptions around user-controlled values, secrets, and error handling. Record a concise reproduction, impact, and remediation for each finding, then add a regression test so the fix stays fixed.",
     date: "Jan 2025",
@@ -141,7 +141,7 @@ export function LabNotes() {
                 </button>
                 {expandedNote === note.id && (
                   <div id={`lab-note-content-${note.id}`} className="mt-4 border-t border-border/60 pt-4">
-                    <p className="text-sm leading-relaxed text-muted-foreground">{note.content}</p>
+                    <p className="text-sm leading-relaxed text-muted-foreground sm:text-justify">{note.content}</p>
                   </div>
                 )}
               </div>

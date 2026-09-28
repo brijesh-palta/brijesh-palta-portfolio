@@ -5,11 +5,11 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://brijesh.janaktravel
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Cloud security, DevSecOps, and threat detection projects. Built with security-first principles and production-ready standards.",
+  description: "Projects covering cloud security, DevSecOps, and threat detection.",
   keywords: ["cloud security", "devsecops", "threat detection", "security projects"],
   openGraph: {
-    title: "Projects — Brijesh Palta",
-    description: "Cloud security, DevSecOps, and threat detection projects.",
+    title: "Projects | Brijesh Palta",
+    description: "Projects covering cloud security, DevSecOps, and threat detection.",
     url: `${baseUrl}/projects`,
     type: "website",
     images: [
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Projects — Brijesh Palta",
+    title: "Projects | Brijesh Palta",
     description: "Cloud security, DevSecOps, and threat detection projects.",
     images: [`${baseUrl}/og-image-projects.png`],
   },

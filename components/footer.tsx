@@ -16,12 +16,11 @@ export function Footer() {
             <div className="space-y-3">
               <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary">Connect</p>
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl text-balance">
-                {"Let's collaborate on "}
-                <span className="bg-gradient-to-l from-primary/50 to-accent text-transparent bg-clip-text ">security</span>
+                Have a cloud security question?
               </h2>
             </div>
             <p className="max-w-md text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Always interested in cybersecurity collaborations, cloud architecture challenges, and conversations about secure code, DevSecOps, and defense mechanisms.
+              I welcome conversations about cloud architecture, application security, and DevSecOps.
             </p>
 
             <div className="pt-2 flex flex-col sm:flex-row gap-3">

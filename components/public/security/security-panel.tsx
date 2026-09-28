@@ -69,40 +69,118 @@ const categories = ["All", "Browser", "Access", "Data", "Operations"] as const
 type Category = (typeof categories)[number]
 
 function getTerminalReply(prompt: string, completionCount: number) {
-  const query = prompt.toLowerCase()
+  const query = prompt.trim().toLowerCase()
 
-  if (query.includes("help") || query === "?") {
-    return "Ask about headers, HTTPS, access control, input validation, secrets, dependencies, or incident response. Try: 'how do I secure API keys?' This console provides guidance only; it does not run commands or scan a target."
+  if (query === "help" || query === "?") {
+    return "Ask about site hardening, HTTPS, security headers, accounts, APIs, input handling, uploads, secrets, cloud, networks, dependencies, logging, or incident response. This guide gives general advice only. It does not run commands or scan a target."
   }
-  if (query.includes("header") || query.includes("csp") || query.includes("content security")) {
-    return "Set headers at your host or CDN: start with a restrictive Content-Security-Policy, X-Content-Type-Options: nosniff, Referrer-Policy, and frame-ancestors 'none'. Allow only the origins your site uses, then test in report-only mode before enforcing a CSP."
-  }
-  if (query.includes("https") || query.includes("tls") || query.includes("hsts")) {
-    return "Redirect HTTP to HTTPS and renew certificates automatically. Add HSTS only after HTTPS is reliable on every covered hostname; includeSubDomains applies to all subdomains."
-  }
-  if (query.includes("access") || query.includes("authoriz") || query.includes("permission") || query.includes("mfa")) {
-    return "Require MFA for privileged accounts and enforce authorization on the server for every sensitive action and object. Test with a second account to confirm it cannot access another user's data."
-  }
-  if (query.includes("input") || query.includes("xss") || query.includes("injection") || query.includes("validat")) {
-    return "Validate data at trust boundaries, use parameterized database queries, and encode output for its rendering context. Treat HTML, URLs, uploaded files, and third-party responses as untrusted."
-  }
-  if (query.includes("secret") || query.includes("key") || query.includes("token") || query.includes("password")) {
-    return "Keep credentials in a managed secret store or protected server environment variables. NEXT_PUBLIC values are bundled for browsers. Rotate exposed credentials and grant each secret minimum permissions."
-  }
-  if (query.includes("dependenc") || query.includes("package") || query.includes("audit")) {
-    return "Commit and review the lockfile, run the package manager's audit in CI, update vulnerable direct and transitive dependencies, and remove packages the app no longer needs."
-  }
-  if (query.includes("incident") || query.includes("backup") || query.includes("recover") || query.includes("log")) {
-    return "Define incident owners and escalation steps, keep tested backups, and centralize useful logs. Redact tokens and sensitive personal data, then rehearse restoring service from a backup."
+  if (query.includes("scan") || query.includes("pentest") || query.includes("penetration test") || query.includes("test my site")) {
+    return "This guide cannot scan or test a website. Only assess systems you own or have explicit permission to test. Use an authorized scanner, then verify findings manually."
   }
   if (query.includes("status") || query.includes("progress")) {
-    return `You have marked ${completionCount} of ${checks.length} checklist items verified. This is your local checklist state, not a security assessment.`
-  }
-  if (query.includes("scan") || query.includes("test my site") || query.includes("pentest")) {
-    return "This static guide cannot scan or test a website. Only assess systems you own or have explicit permission to test; use an authorized scanner and verify findings manually."
+    return `You have marked ${completionCount} of ${checks.length} checklist items verified. This is local checklist progress, not a security assessment.`
   }
 
-  return "I don't have a specific playbook for that yet. Try asking about security headers, HTTPS, access control, input validation, secrets, dependencies, or incident response. Type 'help' to see examples."
+  const topics = [
+    {
+      terms: ["content security policy", "csp", "security header", "security headers", "headers"],
+      reply: "Configure response headers at your host or CDN. Start with a restrictive Content-Security-Policy, X-Content-Type-Options: nosniff, Referrer-Policy, and frame-ancestors 'none'. Test a CSP in report-only mode first. GitHub Pages ignores the public/_headers file, so use an edge proxy or CDN for headers there.",
+    },
+    {
+      terms: ["https", "tls", "ssl", "certificate", "hsts", "protocol"],
+      reply: "Serve the site over HTTPS, redirect HTTP to HTTPS at the host, and renew certificates automatically. Add HSTS only when HTTPS works on every covered hostname. Start without includeSubDomains unless all subdomains support HTTPS.",
+    },
+    {
+      terms: ["api key", "secret", "token", "credential", "password", "private key"],
+      reply: "Keep secrets out of source code and browser bundles. Store them in a managed secret store or protected server environment, grant minimum permissions, and rotate any key that may have been exposed. Values prefixed with NEXT_PUBLIC are public to site visitors.",
+    },
+    {
+      terms: ["authentication", "login", "mfa", "multi-factor", "passkey", "session", "cookie", "account"],
+      reply: "Use MFA or passkeys for privileged accounts, secure session cookies with Secure, HttpOnly, and SameSite attributes, rotate sessions after login, and rate-limit authentication attempts. Never store plaintext passwords; use a purpose-built password hashing function on the server.",
+    },
+    {
+      terms: ["phishing", "suspicious email", "email security"],
+      reply: "Use phishing-resistant MFA for important accounts, verify unexpected requests through a separate trusted channel, and report suspicious messages. For organizations, filter mail, configure SPF, DKIM, and DMARC, and rehearse reporting and account recovery.",
+    },
+    {
+      terms: ["malware", "endpoint", "virus", "ransomware"],
+      reply: "Keep operating systems and endpoint protection current, use standard accounts for daily work, restrict untrusted software, and isolate affected devices during an incident. Maintain tested backups that are not writable with everyday credentials.",
+    },
+    {
+      terms: ["container", "docker", "kubernetes", "image hardening"],
+      reply: "Use trusted, minimal images, pin and scan dependencies, run containers as non-root, drop unnecessary capabilities, and set resource limits. Do not bake secrets into image layers; restrict cluster permissions and exposed services.",
+    },
+    {
+      terms: ["secure coding", "code review", "threat model", "owasp", "secure development"],
+      reply: "Threat-model important data flows, use framework protections, review security-sensitive changes, and add tests for access control and input handling. Use OWASP guidance as a checklist, then verify each control against your application's actual design.",
+    },
+    {
+      terms: ["authorization", "access control", "permission", "role", "least privilege", "idor"],
+      reply: "Check authorization on the server for every action and requested object. Apply least privilege, deny by default, and test with separate accounts to confirm users cannot read or change one another's data.",
+    },
+    {
+      terms: ["api", "endpoint", "rest", "graphql"],
+      reply: "For APIs, authenticate callers, authorize every operation and object, validate request schemas and sizes, rate-limit by account or client, and return only the fields callers need. Avoid putting credentials in URLs, which are often logged.",
+    },
+    {
+      terms: ["cors", "cross-origin"],
+      reply: "Allow only the specific trusted origins your browser client uses. Avoid wildcard origins for credentialed requests, and remember that CORS is a browser rule, not authentication or access control.",
+    },
+    {
+      terms: ["input", "xss", "injection", "sql", "validation", "sanitize", "untrusted"],
+      reply: "Validate type, length, and allowed values at trust boundaries. Use parameterized database queries and context-aware output encoding. Avoid inserting untrusted strings as HTML; treat external data as untrusted too.",
+    },
+    {
+      terms: ["upload", "file upload", "attachment"],
+      reply: "Restrict upload size and allowed file types, verify file content instead of trusting its extension, rename files, and store them outside executable web paths. Scan uploads where appropriate and require authorization to retrieve them.",
+    },
+    {
+      terms: ["dependency", "dependencies", "package", "npm", "pnpm", "supply chain", "lockfile", "audit"],
+      reply: "Commit and review the lockfile, run dependency audits in CI, update vulnerable packages, and remove unused dependencies. Pin trusted CI actions and review changes that add install scripts or new permissions.",
+    },
+    {
+      terms: ["cloud", "aws", "iam", "vpc", "s3"],
+      reply: "In cloud environments, use short-lived roles and least-privilege policies, keep data stores private, encrypt sensitive data, enable audit logs, and alert on unusual access. Review public exposure and account permissions regularly.",
+    },
+    {
+      terms: ["network", "firewall", "segmentation", "port"],
+      reply: "Expose only required services. Restrict inbound and outbound traffic with firewall rules, separate systems by trust level, remove unused listeners, and review network changes against expected traffic flows.",
+    },
+    {
+      terms: ["rate limit", "rate-limit", "ddos", "denial of service", "dos"],
+      reply: "Set request and payload limits at the edge and application, apply rate limits to costly or sensitive operations, and use your host's DDoS protections. Return clear retry guidance and monitor for traffic spikes.",
+    },
+    {
+      terms: ["encryption", "encrypt", "data at rest", "data in transit", "kms"],
+      reply: "Use modern TLS for data in transit and managed encryption for sensitive data at rest. Limit access to encryption keys, define rotation and recovery procedures, and do not treat encryption as a substitute for authorization.",
+    },
+    {
+      terms: ["privacy", "personal data", "data protection", "retention"],
+      reply: "Collect only the personal data the service needs, restrict access, set retention and deletion rules, and explain how data is used. Protect exports and backups too, and avoid putting personal data or credentials in logs.",
+    },
+    {
+      terms: ["log", "logging", "monitor", "monitoring", "alert", "incident", "breach"],
+      reply: "Collect authentication, access, and administrative events centrally. Alert on actionable patterns, restrict log access, set retention deliberately, and redact passwords, tokens, and sensitive personal data. Write down who responds to an alert.",
+    },
+    {
+      terms: ["backup", "recovery", "restore", "ransomware"],
+      reply: "Keep backups separate from production credentials, protect them from alteration, and test restoring them. Document recovery priorities and practice the steps before an incident occurs.",
+    },
+  ]
+
+  const matchedTopic = topics.find((topic) => topic.terms.some((term) => query.includes(term)))
+  if (matchedTopic) return matchedTopic.reply
+
+  if ((query.includes("secure") || query.includes("security")) && /\b(site|website|app|application|portfolio)\b/.test(query)) {
+    return "For this static portfolio: keep dependencies patched, avoid putting secrets in browser code, and serve the site only over HTTPS. Configure CSP and other response headers at a CDN or edge proxy because GitHub Pages ignores public/_headers. Review third-party scripts and links, keep the Pages workflow locked to pnpm, and monitor dependency-audit results. This guide cannot verify the live deployment."
+  }
+
+  const securityTerms = ["security", "secure", "protect", "vulnerab", "threat", "attack", "risk", "hack", "exploit", "privacy", "phish", "malware", "virus", "endpoint", "container", "docker", "kubernetes", "identity", "compliance", "owasp", "zero trust"]
+  if (!securityTerms.some((term) => query.includes(term))) {
+    return "This terminal answers security questions only. Ask about securing a site, HTTPS, APIs, accounts, cloud, code, or incident response. Type 'help' for topics."
+  }
+
+  return "For that security question, start by identifying what data and systems are at risk, who can access them, and how you would detect misuse. Then apply least privilege, reduce exposed services, validate inputs, keep software updated, and test the controls. Ask about a specific area for more detail."
 }
 
 export function SecurityPanel() {
@@ -198,9 +276,9 @@ export function SecurityPanel() {
               <div className="min-w-0">
                 <h2 id="security-terminal-title" className="flex items-center gap-2 font-mono text-sm text-emerald-100">
                   <Terminal className="h-4 w-4 shrink-0 text-emerald-400" />
-                  <span className="truncate">Brijesh Palta / Security guide</span>
+                  <span className="truncate">Security Q&amp;A</span>
                 </h2>
-                <p className="mt-1 font-mono text-[10px] text-emerald-500/80">LOCAL SESSION · NO COMMAND EXECUTION</p>
+                <p className="mt-1 font-mono text-[10px] text-emerald-500/80">SECURITY QUESTIONS ONLY · LOCAL GUIDANCE</p>
               </div>
             </div>
             <button
@@ -216,7 +294,7 @@ export function SecurityPanel() {
 
           <div className="max-h-80 min-h-40 space-y-4 overflow-y-auto p-4 font-mono text-xs leading-relaxed sm:min-h-48 sm:p-5 sm:text-sm">
             <p className="text-emerald-200/70">
-              <span className="text-emerald-400">guide@brijesh:~$</span> Ask a security question or choose a prompt below.
+              <span className="text-emerald-400">guide@brijesh:~$</span> Security questions only. This guide does not run commands or scan sites.
             </p>
             <div aria-live="polite" aria-relevant="additions" className="space-y-4">
               {terminalMessages.map((message, index) => (
@@ -243,7 +321,7 @@ export function SecurityPanel() {
                 maxLength={160}
                 autoComplete="off"
                 spellCheck={false}
-                placeholder="Ask how to secure your app..."
+                placeholder="Ask a security question..."
                 className="h-11 min-w-0 flex-1 bg-transparent font-mono text-xs text-emerald-100 outline-none placeholder:text-emerald-100/35 sm:text-sm"
               />
               <button
@@ -256,7 +334,7 @@ export function SecurityPanel() {
               </button>
             </div>
             <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
-              {["headers", "protect API keys", "dependencies", "scan my site"].map((prompt) => (
+              {["secure my site", "HTTPS setup", "API security", "protect API keys", "scan safely"].map((prompt) => (
                 <button
                   key={prompt}
                   type="button"

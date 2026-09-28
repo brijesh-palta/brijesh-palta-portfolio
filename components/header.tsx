@@ -186,10 +186,13 @@ export function Header() {
         <div
           id="mobile-navigation"
           className={cn(
-            "overflow-hidden bg-background transition-all duration-400 xl:hidden",
-            isMobileMenuOpen ? "max-h-[32rem] opacity-100 pt-4" : "max-h-0 opacity-0",
+            "bg-background transition-[max-height,opacity] duration-400 xl:hidden",
+            isMobileMenuOpen
+              ? "max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain opacity-100 pt-4"
+              : "max-h-0 overflow-hidden opacity-0",
           )}
           aria-hidden={!isMobileMenuOpen}
+          inert={!isMobileMenuOpen}
         >
           <div className="flex flex-col gap-1 border-t border-border/50 pt-4">
             {navItems.map((item, index) => (
@@ -206,25 +209,25 @@ export function Header() {
             ))}
           </div>
 
-          <div className="mt-4 flex items-center gap-2 border-t border-border/50 pt-4 px-4">
-            {socialLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={link.label}
-                className="flex h-11 w-11 items-center justify-center rounded-lg border border-border/50 text-muted-foreground transition-colors active:bg-secondary hover:border-primary/50 hover:text-primary hover:bg-primary/10"
-              >
-                <link.icon className="h-4 w-4" />
-              </a>
-            ))}
-            <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-border/50">
-              <ThemeChanger />
+          <div className="mt-4 border-t border-border/50 px-4 pt-4">
+            <div className="mb-4 flex items-center gap-2">
+              {socialLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.label}
+                  className="flex h-11 w-11 items-center justify-center rounded-lg border border-border/50 text-muted-foreground transition-colors active:bg-secondary hover:border-primary/50 hover:text-primary hover:bg-primary/10"
+                >
+                  <link.icon className="h-4 w-4" />
+                </a>
+              ))}
+              <div className="ml-auto flex h-11 w-11 items-center justify-center rounded-lg border border-border/50">
+                <ThemeToggle />
+              </div>
             </div>
-            <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-border/50">
-              <ThemeToggle />
-            </div>
+            <ThemeChanger variant="mobile" />
           </div>
 
           <div className="mt-3 flex items-center gap-2.5 px-4 py-3 font-mono text-xs text-muted-foreground bg-secondary/30 rounded-lg mx-4 mb-2">

@@ -25,11 +25,11 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://brijesh.janaktravels.com/'),
   title: {
-    default: "Brijesh Palta — Cloud Security & DevSecOps Engineer",
+    default: "Brijesh Palta | Cloud Security & DevSecOps Engineer",
     template: "%s | Brijesh Palta",
   },
   description:
-    "Cloud Security Engineer & DevSecOps specialist. Architecting secure, resilient systems with a focus on threat detection, network defense, and secure software development.",
+    "Projects and notes from Brijesh Palta on cloud security, DevSecOps, threat detection, and secure software development.",
   keywords: ["Cloud Security", "DevSecOps", "AWS", "Cybersecurity", "SIEM", "Network Security", "Secure Development", "Threat Detection", "Information Security"],
   authors: [{ name: "Brijesh Palta", url: "https://github.com/brijesh-palta" }],
   creator: "Brijesh Palta",
@@ -39,22 +39,22 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Brijesh Palta — Cloud Security & DevSecOps Engineer",
-    description: "Architecting secure, resilient systems with expertise in threat detection, network defense, and secure software development.",
+    title: "Brijesh Palta | Cloud Security & DevSecOps Engineer",
+    description: "Projects and notes on cloud security, DevSecOps, threat detection, and secure software development.",
     siteName: "Brijesh Palta",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Brijesh Palta — Cloud Security Engineer",
+        alt: "Brijesh Palta | Cloud Security Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Brijesh Palta — Cloud Security & DevSecOps Engineer",
-    description: "Architecting secure, resilient systems with expertise in cloud security, network defense, and secure development.",
+    title: "Brijesh Palta | Cloud Security & DevSecOps Engineer",
+    description: "Projects and notes on cloud security, threat detection, and secure software development.",
     creator: "@brijeshpalta",
     images: ["/og-image.png"],
   },

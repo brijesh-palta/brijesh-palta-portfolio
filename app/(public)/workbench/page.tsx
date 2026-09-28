@@ -5,11 +5,11 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://brijesh.janaktravel
 
 export const metadata: Metadata = {
   title: "Workbench",
-  description: "Active security projects and research initiatives. Systems being secured, threats being analyzed, and defenses being strengthened.",
+  description: "Current projects and lab work in cloud security, threat detection, and defensive engineering.",
   keywords: ["security", "workbench", "research", "development"],
   openGraph: {
-    title: "Workbench — Brijesh Palta",
-    description: "Active security projects and research initiatives.",
+    title: "Workbench | Brijesh Palta",
+    description: "Current projects and lab work in cloud security, threat detection, and defensive engineering.",
     url: `${baseUrl}/workbench`,
     type: "website",
     images: [
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Workbench — Brijesh Palta",
+    title: "Workbench | Brijesh Palta",
     description: "Active security projects and research initiatives.",
     images: [`${baseUrl}/og-image-workbench.png`],
   },

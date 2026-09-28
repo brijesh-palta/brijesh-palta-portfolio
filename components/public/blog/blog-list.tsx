@@ -12,7 +12,7 @@ const blogPosts = [
     slug: "iot-security-workshop-guide",
     title: "IoT Security Workshop: Practical Guide",
     excerpt:
-      "Deep dive into IoT security vulnerabilities and testing. Learn how to identify weaknesses in smart devices, conduct security assessments, and implement protective measures for IoT ecosystems.",
+      "Covers common IoT weaknesses, safe assessment methods, and practical ways to reduce risk.",
     date: "Jan 24, 2026",
     readTime: "15 min read",
     category: "security",
@@ -30,7 +30,7 @@ const blogPosts = [
     slug: "cloud-security-workshop-essentials",
     title: "Cloud Security Workshop: Essential Controls",
     excerpt:
-      "Comprehensive guide to implementing security controls in cloud environments. AWS security architecture, best practices, and hands-on implementation strategies for enterprise deployments.",
+      "Practical AWS controls for identity, network boundaries, encryption, logging, and monitoring.",
     date: "Feb 07, 2026",
     readTime: "16 min read",
     category: "security",

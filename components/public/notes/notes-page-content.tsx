@@ -10,7 +10,7 @@ const notes = [
     id: 1,
     title: "Building a Linux distro from scratch",
     excerpt:
-      "Learnings from compiling the kernel, configuring BusyBox, and creating bootable ISOs with Syslinux. A deep dive into the foundations of operating systems.",
+      "Notes on compiling a kernel, configuring BusyBox, and building bootable ISOs with Syslinux.",
     content:
       "A minimal Linux distribution is a useful way to understand the path from power-on to a working shell. Start by choosing a kernel configuration and building it for the target architecture. Create a root filesystem with BusyBox, add the device nodes and startup scripts needed by the init process, and package it as an initramfs. Configure Syslinux to load the kernel and filesystem, then test the image in a virtual machine before trying physical hardware. Keep each build step reproducible: record tool versions, configuration choices, and the commands used so a broken image can be traced back to its source.",
     date: "Nov 2025",
@@ -23,7 +23,7 @@ const notes = [
     id: 2,
     title: "MCP protocol in LLM apps",
     excerpt:
-      "Implementing Model Context Protocol for seamless AI model interactions with vector databases in RAG apps. Exploring the future of AI agent communication.",
+      "How an app can connect a language model to external tools and retrieval through Model Context Protocol.",
     content:
       "The Model Context Protocol gives an application a consistent way to connect a model to external tools and data. An MCP client discovers available capabilities from a server, presents the relevant tool descriptions to the model, and handles requested calls through a controlled boundary. For a RAG application, keep retrieval behind a narrowly scoped tool: validate inputs, enforce access controls before returning documents, and avoid sending more context than the task requires. Treat tool output as untrusted data, log calls without recording secrets, and make failures explicit so the application can recover safely.",
     date: "Apr 2025",
@@ -73,9 +73,9 @@ const notes = [
   },
   {
     id: 6,
-    title: "React Server Components deep dive",
+    title: "React Server Components",
     excerpt:
-      "Understanding the paradigm shift with RSC. How server components change data fetching patterns and improve performance.",
+      "How server components affect data fetching, client boundaries, and what runs in the browser.",
     content:
       "React Server Components let parts of a React tree render on the server without shipping their implementation to the browser. They work well for data-heavy, mostly read-only UI, while interactive controls still belong in client components. Keep the client boundary as small as practical: pass serializable data across it, and avoid pulling server-only modules into browser bundles. When debugging, trace which component owns data fetching and which owns interaction state. Measure the rendered result and network requests so the architectural change improves real loading behavior rather than adding complexity for its own sake.",
     date: "Aug 2023",
@@ -122,8 +122,7 @@ export function NotesPageContent() {
           <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary">Field Notes</p>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Lab Notes</h1>
           <p className="max-w-2xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Brief observations, technical findings, and thoughts from the workbench. Documentation of the learning
-            journey.
+            Short notes on things I build, test, and learn.
           </p>
         </div>
 
@@ -251,7 +250,7 @@ export function NotesPageContent() {
                     </button>
                     {expandedNote === note.id && (
                       <div id={`note-content-${note.id}`} className="mt-4 border-t border-border/60 pt-4">
-                        <p className="text-sm leading-relaxed text-muted-foreground">{note.content}</p>
+                        <p className="text-sm leading-relaxed text-muted-foreground sm:text-justify">{note.content}</p>
                       </div>
                     )}
                   </div>

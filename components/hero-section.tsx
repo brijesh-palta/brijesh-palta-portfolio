@@ -57,7 +57,7 @@ export function HeroSection() {
           <div className="space-y-8 sm:space-y-10">
             <div className="space-y-3 animate-fade-in-up">
               <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary">
-                BRIJESH PALTA — Cloud Security & DevSecOps Engineer
+                BRIJESH PALTA | Cloud Security & DevSecOps Engineer
               </p>
               <h1 className="text-4xl font-bold tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl text-balance">
                 Architecting secure
@@ -71,7 +71,7 @@ export function HeroSection() {
             </div>
 
             <p className="max-w-lg text-base sm:text-lg leading-relaxed text-muted-foreground animate-fade-in-up stagger-2">
-              An aspiring DevSecOps & Cloud Security Engineer passionate about designing secure, scalable systems. Currently pursuing Master's in Cyber Security at Deakin University. Here, security is architected, threats are analyzed, and resilience is built. Not just a portfolio. A security laboratory.
+              I am completing a Master's in Cyber Security at Deakin University and building practical experience in cloud security and DevSecOps. This site brings together my projects, lab notes, and what I am learning.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up stagger-3">

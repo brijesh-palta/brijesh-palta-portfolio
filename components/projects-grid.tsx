@@ -7,9 +7,9 @@ import { Star, GitFork, Sparkles } from "lucide-react"
 const projects = [
   {
     id: 0,
-    title: "Binary Mind — Secure File Sharing",
+    title: "Binary Mind: Secure File Sharing",
     description:
-      "A secure cloud file-sharing platform with AES-256 encryption, role-based access control, and activity logging. Built with modern security best practices for enterprise-grade protection.",
+      "A cloud file-sharing project with AES-256 encryption, role-based access, and activity logs.",
     tags: ["Encryption", "RBAC", "Cloud Security", "Python"],
     category: "Cloud Security",
     year: "2024",
@@ -20,9 +20,9 @@ const projects = [
   },
   {
     id: 1,
-    title: "Project Radar — Task Management",
+    title: "Project Radar: Task Management",
     description:
-      "Cross-platform task management application with Firebase Authentication and Firestore real-time synchronization. Built with Kotlin and Swift for iOS and Android.",
+      "An iOS and Android task manager using Firebase Authentication and Firestore to sync tasks.",
     tags: ["Firebase", "Kotlin", "Swift", "DevSecOps"],
     category: "Application Development",
     year: "2025",
@@ -34,7 +34,7 @@ const projects = [
     id: 2,
     title: "Insider Threat Detection System",
     description:
-      "VMware-based enterprise network simulation with Active Directory, Wazuh SIEM, Suricata IDS, and ELK Stack for detecting insider threats through behavioral anomaly analysis.",
+      "A VMware lab using Active Directory, Wazuh, Suricata, and the ELK Stack to study insider-threat detection.",
     tags: ["SIEM", "Wazuh", "IDS", "Threat Detection"],
     category: "Threat Detection",
     year: "2025",
@@ -44,9 +44,9 @@ const projects = [
   },
   {
     id: 3,
-    title: "Digital Visiting Card — QR System",
+    title: "Digital Visiting Card: QR System",
     description:
-      "QR-based digital visiting card system with Firebase Authentication and Firestore backend. Enables secure, scalable digital identity sharing.",
+      "A QR contact card backed by Firebase Authentication and Firestore for sharing contact details.",
     tags: ["Firebase", "QR Codes", "Mobile", "Security"],
     category: "Application Development",
     year: "2025",
@@ -56,9 +56,9 @@ const projects = [
   },
   {
     id: 4,
-    title: "Brijaix — AI ML Diet Recommender",
+    title: "Brijaix: Diet and Workout Recommender",
     description:
-      "ML-driven intelligent recommendation system with data preprocessing, feature engineering, and regression models for personalized diet and workout plans.",
+      "A recommendation project using data preparation and regression models to suggest diet and workout plans.",
     tags: ["Python", "Machine Learning", "AI", "Regression"],
     category: "Machine Learning",
     year: "2025",

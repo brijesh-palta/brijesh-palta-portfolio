@@ -8,7 +8,11 @@ import { themes, type ThemeColor } from "@/lib/themes"
 
 const STORAGE_KEY = "color-theme"
 
-export function ThemeChanger() {
+interface ThemeChangerProps {
+  variant?: "toolbar" | "mobile"
+}
+
+export function ThemeChanger({ variant = "toolbar" }: ThemeChangerProps) {
   const [currentTheme, setCurrentTheme] = useState<ThemeColor>("golden")
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -119,6 +123,33 @@ export function ThemeChanger() {
     purple: "bg-gradient-to-br from-purple-400 to-violet-600",
     emerald: "bg-gradient-to-br from-emerald-400 to-green-600",
     rose: "bg-gradient-to-br from-rose-400 to-pink-600",
+  }
+
+  if (variant === "mobile") {
+    return (
+      <div className="w-full">
+        <p className="mb-2 font-mono text-xs uppercase text-muted-foreground">Choose a color theme</p>
+        <div className="grid grid-cols-2 gap-2">
+          {Object.entries(themes).map(([key, theme]) => (
+            <button
+              key={key}
+              type="button"
+              aria-pressed={currentTheme === key}
+              onClick={() => handleThemeChange(key as ThemeColor)}
+              className={cn(
+                "flex min-h-11 min-w-0 items-center gap-2 rounded-md border px-3 text-left transition-colors",
+                currentTheme === key
+                  ? "border-primary/60 bg-primary/10 text-foreground"
+                  : "border-border/60 text-muted-foreground hover:bg-secondary/70",
+              )}
+            >
+              <span className={cn("h-4 w-4 shrink-0 rounded-full border border-border", themeColors[key as ThemeColor])} />
+              <span className="truncate text-xs">{theme.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    )
   }
 
   return (

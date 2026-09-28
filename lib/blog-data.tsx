@@ -23,7 +23,7 @@ export const blogPosts: BlogPost[] = [
     slug: "iot-security-workshop-guide",
     title: "IoT Security Workshop: Practical Guide",
     excerpt:
-      "Deep dive into IoT security vulnerabilities and testing. Learn how to identify weaknesses in smart devices, conduct security assessments, and implement protective measures for IoT ecosystems.",
+      "Covers common IoT weaknesses, safe assessment methods, and practical ways to reduce risk.",
     content: `
 ## Introduction
 
@@ -105,7 +105,7 @@ IoT security requires a comprehensive approach combining technical controls, pro
     slug: "cloud-security-workshop-essentials",
     title: "Cloud Security Workshop: Essential Controls",
     excerpt:
-      "Comprehensive guide to implementing security controls in cloud environments. AWS security architecture, best practices, and hands-on implementation strategies for enterprise deployments.",
+      "Practical AWS controls for identity, network boundaries, encryption, logging, and monitoring.",
     content: `
 ## Introduction
 
@@ -232,7 +232,7 @@ Cloud security is not a one-time setup but an ongoing process. Implement defense
     slug: "aws-cloud-security-best-practices",
     title: "AWS Cloud Security Best Practices",
     excerpt:
-      "A comprehensive guide to securing cloud infrastructure on AWS. IAM policies, VPC configuration, encryption, and defense-in-depth strategies for production environments.",
+      "A practical AWS checklist for IAM, network boundaries, encryption, and continuous monitoring.",
     content: `
 ## Introduction
 
@@ -296,7 +296,7 @@ Cloud security is not a one-time setup. It requires continuous improvement and m
     slug: "aws-cloud-security-best-practices",
     title: "AWS Cloud Security Best Practices",
     excerpt:
-      "A comprehensive guide to securing cloud infrastructure on AWS. IAM policies, VPC configuration, encryption, and defense-in-depth strategies for production environments.",
+      "A practical AWS checklist for IAM, network boundaries, encryption, and continuous monitoring.",
     content: `
 ## Introduction
 
@@ -360,7 +360,7 @@ Cloud security is not a one-time setup. It requires continuous improvement and m
     slug: "siem-threat-detection-guide",
     title: "Building SIEM Systems for Threat Detection",
     excerpt:
-      "Comprehensive guide to setting up SIEM solutions using Wazuh and ELK Stack. Detecting insider threats through log analysis and behavioral anomalies.",
+      "Set up Wazuh and the ELK Stack to collect logs, write detections, and investigate suspicious activity.",
     content: `
 ## What is SIEM?
 
