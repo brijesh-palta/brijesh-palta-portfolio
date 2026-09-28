@@ -12,7 +12,7 @@
     "DevSecOps",
     "cybersecurity"
   ],
-  "author": "Brijesh Palta",
+  "author": "Brijesh Palta (maintainer)",
   "scripts": {
     "analyze": "next experimental-analyze",
     "build": "next build",
