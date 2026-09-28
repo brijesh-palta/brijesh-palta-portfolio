@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { SecurityPanel } from "@/components/public/security/security-panel"
 
 export const metadata: Metadata = {
-  title: "Security Panel",
-  description: "An interactive, browser-local checklist for improving application security.",
+  title: "BP > Security Knowledge Terminal",
+  description: "A local cybersecurity knowledge base and Q&A terminal covering secure engineering, cloud, APIs, mobile, AI, and incident response.",
 }
 
 export default function SecurityPage() {
